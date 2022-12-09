@@ -10,6 +10,13 @@ const SignIn = ({ navigation: { navigate } }) => {
     const [email1, setEmail1] = useState('');
     const [pass1, setPass1] = useState('');
     const [err1, setErr1] = useState('');
+    const storeData = async (value) => {
+        try {
+            await AsyncStorage.setItem('useremail', email1);
+        } catch (e) {
+            // saving error
+        }
+    }
     return(
         <View style={{backgroundColor: '#fff', flex: 1}}>
             <View style = {{backgroundColor: '#fff'}}>
@@ -20,13 +27,11 @@ const SignIn = ({ navigation: { navigate } }) => {
                 </TouchableOpacity>
                 <Text style={{paddingLeft: 20, fontSize: 15, marginTop:10, color: '#000'}}>Sign in. Already a customer?</Text>
                 <Text style={{paddingLeft: 20, fontSize: 15, marginTop:20, color: '#000', fontWeight: 'bold'}}>Email or phone number *</Text>
-                <TextInput style={style.input} onChangeText={(value) => setEmail1(value)}>
-                </TextInput>
+                <TextInput style={style.input} onChangeText={(value) => setEmail1(value)}></TextInput>
                 <Text style={{paddingLeft: 20, fontSize: 15, marginTop:5, color: '#000', fontWeight: 'bold'}}>Password *</Text>
-                <TextInput style={style.input} secureTextEntry={true} onChangeText={(value) => setPass1(value)}>
-                </TextInput>
+                <TextInput style={style.input} secureTextEntry={true} onChangeText={(value) => setPass1(value)}></TextInput>
                 <Text style = {{marginLeft:20, color: 'red'}}>{err1}</Text>
-                <TouchableOpacity style={style.loginScreenButton} onPress={() => {if(email1.length == 0 || pass1.length == 0){setErr1('*Enter all details')}else{navigate('HomePage')}}} underlayColor='#fff'>
+                <TouchableOpacity style={style.loginScreenButton} onPress={() => {if(email1.length == 0 || pass1.length == 0){setErr1('*Enter all details')}else{storeData();navigate('Home')}}} underlayColor='#fff'>
                     <Text style={style.loginText}>Continue</Text>
                 </TouchableOpacity>
                 <Text style={{paddingLeft: 20, marginTop:10, color: '#000', paddingRight:20}}>By continuing, you agree to Amazon Conditions of use and Privacy Notice</Text>
@@ -49,47 +54,45 @@ const style = StyleSheet.create({
         padding: 10,
     },
     loginScreenButton:{
-            marginRight:10,
-            marginLeft:10,
-           marginTop:10,
-            paddingTop:10,
-            paddingBottom:10,
-            borderRadius:10,
-            borderWidth: 1,
-            borderColor: '#000',
-            backgroundColor: 'orange'
-          },
-          otherButtons: {
-                    marginRight:10,
-                    marginLeft:10,
-                    marginTop:10,
-                    paddingTop:10,
-                    paddingBottom:10,
-                    borderRadius:10,
-                    borderWidth: 1,
-                    borderColor: '#000',
-                    backgroundColor: '#E1ECF4'
-                },
-          loginText:{
-              color:'#000',
-              textAlign:'center',
-              paddingLeft : 10,
-              paddingRight : 10
-          }
+        marginRight:10,
+        marginLeft:10,
+        marginTop:10,
+        paddingTop:10,
+        paddingBottom:10,
+        borderRadius:10,
+        borderWidth: .5,
+        borderColor: '#000',
+        backgroundColor: '#FEBD69'
+    },
+    otherButtons: {
+        marginRight:10,
+        marginLeft:10,
+        marginTop:10,
+        paddingTop:10,
+        paddingBottom:10,
+        borderRadius:10,
+        borderWidth: .5,
+        borderColor: '#000',
+        backgroundColor: '#E1ECF4'
+    },
+    loginText:{
+        color:'#000',
+        textAlign:'center',
+        paddingLeft : 10,
+        paddingRight : 10
+    }
 });
 
 const Signin1 = () => {
     return(
-            <NavigationContainer>
-                      <Stack.Navigator initialRouteName="SignIn" screenOptions={{
-                                                                   headerShown: false
-                                                                 }}>
-                        <Stack.Screen name="SignIn" component={SignIn} />
-                        <Stack.Screen name="SignUp" component={SignUp} />
-                        <Stack.Screen name="HomePage" component={Home1} />
-                      </Stack.Navigator>
-                    </NavigationContainer>
-        );
+        <NavigationContainer>
+            <Stack.Navigator initialRouteName="SignIn" screenOptions={{headerShown: false}}>
+                <Stack.Screen name="SignIn" component={SignIn} />
+                <Stack.Screen name="SignUp" component={SignUp} />
+                <Stack.Screen name="Home" component={Home1} />
+            </Stack.Navigator>
+        </NavigationContainer>
+    );
 }
 
 export default SignIn;

@@ -6,18 +6,28 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import {useRoute} from '@react-navigation/native';
 import { StackActions } from '@react-navigation/native';
 const Stack = createNativeStackNavigator();
+const names = [];
+const mobiles = [];
+const passwords = [];
 const SignUp = ({ navigation: { navigate } }) => {
     const [name, setName] = useState("");
     const [mobile, setMobile] = useState("");
     const [password, setPassword] = useState("");
     const[error, setError] = useState('');
+    function storeData(){
+        if(name.length != 0 && mobile.length != 0 && password.length != 0){
+            names.push(name);
+            mobiles.push(mobile);
+            passwords.push(password);
+        }
+    }
     return(
         <View>
             <View style={{backgroundColor:'#fff'}}>
                 <Image source={require('../assets/images/logo1.png')} style={{height: 100,marginLeft:'auto', marginRight: 'auto'}} />
             </View>
-            <View style={{backgroundColor: '#E1ECF4', marginBottom: -30}}>
-                <Text style={{paddingLeft: 20, fontSize: 20, marginTop: 50, color: '#000', paddingBottom: 20}}>Welcome</Text>
+            <View style={{backgroundColor: '#E1ECF4'}}>
+                <Text style={{paddingLeft: 20, fontSize: 20, color: '#000', paddingBottom: 10, paddingTop:10}}>Welcome</Text>
             </View>
             <Text style={{paddingLeft: 20, fontSize: 20, marginTop: 15, color: '#000', paddingBottom: 20, fontWeight: 'bold'}}>Create account - New to Amazon</Text>
             <Text style={{paddingLeft: 20, fontSize: 15, marginTop:10, color: '#000', fontWeight: 'bold'}}>First and last name *</Text>
@@ -27,17 +37,27 @@ const SignUp = ({ navigation: { navigate } }) => {
             <Text style={{paddingLeft: 20, fontSize: 15, marginTop:10, color: '#000', fontWeight: 'bold'}}>Set Password *</Text>
             <TextInput style={style.input} secureTextEntry={true} onChangeText={(value) => setPassword(value)}></TextInput>
             <Text style = {{marginLeft:20, color: 'red'}}>{error}</Text>
-            <TouchableOpacity style={style.loginScreenButton} onPress={() => {if(name.length == 0 || mobile.length == 0 || password.length == 0){setError('*Enter all details')}else{navigate('HomePage')}}} underlayColor='#fff'>
+            <TouchableOpacity style={style.loginScreenButton} onPress={() => {if(name.length == 0 || mobile.length == 0 || password.length == 0){setError('*Enter all details')}else{storeData(); navigate('Home',{"nameList": name, "mobileList": mobile, "passwordList" : password})}}} underlayColor='#fff'>
                   <Text style={style.loginText}>Continue</Text>
             </TouchableOpacity>
+            <Text style={{paddingLeft: 20, marginTop:30, color: '#000', paddingRight:20}}>By creating an account or logging in, you agree to Amazon's Conditions of Use and Privacy Policy</Text>
+            <View style={{height: 0.5, backgroundColor: 'black', marginTop:20,}}></View>
+            <View style={{marginTop:20, display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly'}}>
+                <Text>Condition of use</Text>
+                <Text>Privacy Notice</Text>
+                <Text>Help</Text>
+            </View>
+            <Text style={{textAlign: 'center', marginTop: 20}}>@1995-2022 amazon.com</Text>
         </View>
     );
 }
+
 const ErrorMessage = () => {
     return(
         <Text>Error</Text>
     );
 }
+
 const style = StyleSheet.create({
     input: {
         height: 50,
@@ -46,31 +66,33 @@ const style = StyleSheet.create({
         padding: 10,
     },
     loginScreenButton:{
-            marginRight:10,
-            marginLeft:10,
-           marginTop:10,
-            paddingTop:10,
-            paddingBottom:10,
-            borderRadius:10,
-            borderWidth: 1,
-            borderColor: '#000',
-            backgroundColor: 'orange'
-          },
-          loginText:{
-              color:'#000',
-              textAlign:'center',
-              paddingLeft : 10,
-              paddingRight : 10
-          },
+        marginRight:10,
+        marginLeft:10,
+        marginTop:10,
+        paddingTop:10,
+        paddingBottom:10,
+        borderRadius:10,
+        borderWidth: .5,
+        borderColor: '#000',
+        backgroundColor: '#FEBD69'
+    },
+    loginText:{
+        color:'#000',
+        textAlign:'center',
+        paddingLeft : 10,
+        paddingRight : 10
+    },
 });
+
 const SignUp1 = () => {
     return(
-            <NavigationContainer>
-                      <Stack.Navigator initialRouteName="SignUp" screenOptions={{ headerShown: false}}>
-                        <Stack.Screen name="SignUp" component={SignUp} />
-                        <Stack.Screen name="HomePage" component={Home1} />
-                      </Stack.Navigator>
-                    </NavigationContainer>
+        <NavigationContainer>
+            <Stack.Navigator initialRouteName="SignUp" screenOptions={{ headerShown: false}}>
+                <Stack.Screen name="SignUp" component={SignUp} />
+                <Stack.Screen name="Home" component={Home1} />
+            </Stack.Navigator>
+        </NavigationContainer>
     );
 }
+
 export default SignUp;
