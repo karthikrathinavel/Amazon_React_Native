@@ -1,13 +1,23 @@
+import Alexastos from './screens/Alexastos';
+import ProductPage from './screens/ProductPage.js';
+import Alexa from './screens/Alexa.js';
+import Travel from './screens/Travel.js';
+import House from './screens/House.js';
+import MiniTV from './screens/MiniTV.js';
+import Movies from './screens/Movies.js';
+import Fashion from './screens/Fashion.js';
+import Electronics from './screens/Electronics.js';
+import SpeakToShop from './screens/SpeakToShop.js';
 import Mobile2 from './screens/Mobile2.js';
-import Prime1 from './screens/Prime1.js';
-import Delivery from './screens/Delivery.js';
+import Mobiles from './screens/Mobiles.js';
+import Delivery1 from './screens/Delivery.js';
 import Payment from './screens/Payment.js';
 import SignIn from './screens/Signin.js';
 import SignUp from './screens/Signup.js';
 import Home1 from './screens/Home.js';
 import Cart from './screens/Cart.js';
-import React from 'react';
-import {Text, View, Image, StyleSheet, Button, TouchableOpacity} from 'react-native';
+import React, {useEffect} from 'react';
+import {Text, View, Image, StyleSheet, Button, TouchableOpacity, BackHandler, Alert} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import {useRoute} from '@react-navigation/native';
@@ -26,7 +36,7 @@ const BeforeSignIn = ({ navigation: { navigate } }) => {
             <TouchableOpacity style={style.otherButtons} onPress={() => navigate('SignUp')} underlayColor='#fff'>
                   <Text style={style.loginText}>New to amazon.in? Create an account</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={style.otherButtons} onPress={() => navigate('HomePage')} underlayColor='#fff'>
+            <TouchableOpacity style={style.otherButtons} onPress={() => navigate('Home')} underlayColor='#fff'>
                   <Text style={style.loginText}>Skip sign in</Text>
             </TouchableOpacity>
         </View>
@@ -35,18 +45,27 @@ const BeforeSignIn = ({ navigation: { navigate } }) => {
 const App = () => {
     return(
         <NavigationContainer>
-                  <Stack.Navigator initialRouteName="Home" screenOptions={{
+                  <Stack.Navigator initialRouteName="Home1" screenOptions={{
                                                                headerShown: false
                                                              }}>
-                    <Stack.Screen name="Home" component={BeforeSignIn} />
+                    <Stack.Screen name="Home1" component={BeforeSignIn} />
                     <Stack.Screen name="SignIn" component={SignIn} />
                     <Stack.Screen name="SignUp" component={SignUp} />
-                    <Stack.Screen name="HomePage" component={Home1} />
+                    <Stack.Screen name="Home" component={Home1} />
                     <Stack.Screen name="Cart" component={Cart} />
                     <Stack.Screen name="Payment" component={Payment} />
-                    <Stack.Screen name="Delivery" component={Delivery} />
-                    <Stack.Screen name="Prime1" component={Prime1} />
-                    <Stack.Screen name="Mobile2" component={Mobile2} />
+                    <Stack.Screen name="Delivery" component={Delivery1} />
+                    <Stack.Screen name="Electronics" component={Electronics} />
+                    <Stack.Screen name="Fashion" component={Fashion} />
+                    <Stack.Screen name="Movies" component={Movies} />
+                    <Stack.Screen name="Mobiles" component={Mobiles} />
+                    <Stack.Screen name="MiniTV" component={MiniTV} />
+                    <Stack.Screen name="House" component={House} />
+                    <Stack.Screen name="Travel" component={Travel} />
+                    <Stack.Screen name="Alexa" component={Alexa} />
+                    <Stack.Screen name="SpeakToShop" component={SpeakToShop} />
+                    <Stack.Screen name="ProductPage" component={ProductPage} />
+                    <Stack.Screen name="Alexastos" component={Alexastos} />
                   </Stack.Navigator>
                 </NavigationContainer>
     );
@@ -67,14 +86,14 @@ const style = StyleSheet.create({
     loginScreenButton:{
         marginRight:10,
         marginLeft:10,
-       marginTop:10,
+        marginTop:10,
         paddingTop:10,
         paddingBottom:10,
         borderRadius:10,
-        borderWidth: 1,
+        borderWidth: .5,
         borderColor: '#000',
-        backgroundColor: 'orange'
-      },
+        backgroundColor: '#FEBD69'
+    },
       loginText:{
           color:'#000',
           textAlign:'center',
@@ -88,7 +107,7 @@ const style = StyleSheet.create({
           paddingTop:10,
           paddingBottom:10,
           borderRadius:10,
-          borderWidth: 1,
+          borderWidth: .5,
           borderColor: '#000',
           backgroundColor: '#E1ECF4'
       }
